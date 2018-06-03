@@ -1,0 +1,26 @@
+{
+  "extends": ["prettier", "prettier/standard"],
+  "plugins": ["prettier"],
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest": true,
+    "mocha": true
+  },
+  "globals": {
+    "browser": true
+  },
+  "rules": {
+    "standard/object-curly-even-spacing": [2, "either"],
+    "standard/array-bracket-even-spacing": [2, "either"],
+    "standard/computed-property-even-spacing": [2, "even"],
+    "standard/no-callback-literal": [2, ["cb", "callback"]]
+  }
+}
