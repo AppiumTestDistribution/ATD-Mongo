@@ -9,11 +9,11 @@ router.get("/", async (req, res) => {
 
 async function getDevices(res) {
   const url = "mongodb://localhost:27017";
-  const dbName = "devices";
+  const dbName = "report";
   const client = await MongoClient.connect(url);
   console.log("Connected successfully to server");
   const db = await client.db(dbName);
-  const collection = await db.collection("test");
+  const collection = await db.collection("devices");
   await collection
     .find({ deviceState: "AVAILABLE" })
     .toArray(function(err, docs) {
