@@ -1,6 +1,17 @@
 import http from "http";
 import app from "./index";
-const port = process.env.PORT || 3000;
-const server = http.createServer(app);
+import dbHelpers from "./db";
 
-server.listen(port);
+const port = process.env.PORT || 3000;
+const mongoPort = process.env.MONGOPORT || 27017;
+
+dbHelpers.connect("mongodb://localhost:" + mongoPort + "/report", err => {
+  if (err) {
+    console.log("Unable to connect to Mongo.");
+    process.exit(1);
+  } else {
+    app.listen(port, function() {
+      console.log("Listening on port 3000...");
+    });
+  }
+});

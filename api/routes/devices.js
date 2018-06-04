@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { MongoClient } from "mongodb";
+import dbHelpers from "../../db";
 import assert from "assert";
 const router = Router();
 router.get("/", async (req, res) => {
@@ -8,18 +8,12 @@ router.get("/", async (req, res) => {
 });
 
 async function getDevices(res) {
-  const url = "mongodb://localhost:27017";
-  const dbName = "report";
-  const client = await MongoClient.connect(url);
-  console.log("Connected successfully to server");
-  const db = await client.db(dbName);
-  const collection = await db.collection("devices");
+  const collection = await dbHelpers.get().collection("devices");
   await collection
     .find({ deviceState: "AVAILABLE" })
     .toArray(function(err, docs) {
       res.send(docs);
     });
-  await client.close();
 }
 
 export default router;
