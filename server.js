@@ -11,7 +11,7 @@ dbHelpers.connect("mongodb://localhost:" + mongoPort + "/report", err => {
     process.exit(1);
   } else {
     app.listen(port, function() {
-      console.log("Listening on port 3000...");
+      console.log("Listening on port " + port + "...");
     });
   }
 });
