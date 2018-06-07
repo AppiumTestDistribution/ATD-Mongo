@@ -3,8 +3,11 @@ import dbHelpers from "../../db";
 import assert from "assert";
 const router = Router();
 router.get("/", async (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   await getDevices(res);
+});
+
+router.get("/drop", async (req, res) => {
+  await dropCollection(res);
 });
 
 router.post("/", async (req, res) => {
@@ -17,6 +20,16 @@ async function getDevices(res) {
   await collection.find().toArray(function(err, docs) {
     res.send(docs);
   });
+}
+
+async function dropCollection(res) {
+  await dbHelpers
+    .get()
+    .collection("devices")
+    .drop(function(err, delOK) {
+      if (err) res.send("Nothing to Delete");
+      if (delOK) res.send("Collection deleted");
+    });
 }
 
 async function insertDevices(data, res) {
