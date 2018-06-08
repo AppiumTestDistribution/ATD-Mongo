@@ -3,7 +3,7 @@ import dbHelpers from "../../db";
 import assert from "assert";
 const router = Router();
 router.get("/", async (req, res) => {
-  await getTestResults(res);
+  await getTestResults(req, res);
 });
 
 router.post("/", async (req, res) => {
@@ -15,11 +15,21 @@ router.get("/drop", async (req, res) => {
   await dropCollection(res);
 });
 
-async function getTestResults(res) {
+async function getTestResults(req, res) {
   const collection = await dbHelpers.get().collection("testresults");
-  await collection.find().toArray(function(err, docs) {
-    res.send(docs);
-  });
+  if (req.query.udid != null) {
+    await collection
+      .find({
+        "deviceinfo.device.udid": req.query.udid
+      })
+      .toArray(function(err, details) {
+        res.send(details);
+      });
+  } else {
+    await collection.find().toArray(function(err, docs) {
+      res.send(docs);
+    });
+  }
 }
 
 async function dropCollection(res) {
