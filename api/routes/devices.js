@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
 async function getDevices(res) {
   const collection = await dbHelpers.get().collection("devices");
   await collection.find().toArray(function(err, docs) {
-    res.send(docs);
+    res.send(docs[0].allDevices);
   });
 }
 
