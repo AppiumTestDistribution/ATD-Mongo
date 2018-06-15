@@ -1,22 +1,23 @@
-import { Router } from "express";
-import dbHelpers from "../../db";
-import assert from "assert";
+import { Router } from 'express';
+import dbHelpers from '../../db';
+import assert from 'assert';
+import helpers from '../../utils/helpers';
 const router = Router();
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   await getDevices(res);
 });
 
-router.get("/drop", async (req, res) => {
+router.get('/drop', async (req, res) => {
   await dropCollection(res);
 });
 
-router.post("/", async (req, res) => {
-  console.log("receiving data...");
+router.post('/', async (req, res) => {
+  console.log('receiving data...');
   await insertDevices(req.body, res);
 });
 
 async function getDevices(res) {
-  const collection = await dbHelpers.get().collection("devices");
+  const collection = await dbHelpers.get().collection('devices');
   await collection.find().toArray(function(err, docs) {
     res.send(docs[0].allDevices);
   });
@@ -25,22 +26,15 @@ async function getDevices(res) {
 async function dropCollection(res) {
   await dbHelpers
     .get()
-    .collection("devices")
+    .collection('devices')
     .drop(function(err, delOK) {
-      if (err) res.send("Nothing to Delete");
-      if (delOK) res.send("Collection deleted");
+      if (err) res.send('Nothing to Delete');
+      if (delOK) res.send('Collection deleted');
     });
 }
 
 async function insertDevices(data, res) {
-  const collection = await dbHelpers.get().collection("devices");
-  await collection.insertOne(data, function(error, response) {
-    if (error) {
-      res.send("Error occurred while inserting");
-    } else {
-      res.send("Success");
-    }
-  });
+  helpers.insertData(data, res, 'devices');
 }
 
 export default router;
