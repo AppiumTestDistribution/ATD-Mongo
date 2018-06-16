@@ -27,10 +27,6 @@ async function insertAppumLogs(data, res) {
   helpers.insertData(data, res, 'logs');
 }
 
-router.get('/drop', async (req, res) => {
-  await dropCollection(res);
-});
-
 async function dropCollection(res) {
   await dbHelpers
     .get()

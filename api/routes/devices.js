@@ -7,10 +7,6 @@ router.get('/', async (req, res) => {
   await getDevices(res);
 });
 
-router.get('/drop', async (req, res) => {
-  await dropCollection(res);
-});
-
 router.post('/', async (req, res) => {
   console.log('receiving data...');
   await insertDevices(req.body, res);
