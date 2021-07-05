@@ -22,7 +22,7 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
-    "eslint": "^4.19.1",
+    "eslint": "^7.30.0",
     "eslint-plugin-prettier": "^2.6.0",
     "express": "^4.16.3"
   }
